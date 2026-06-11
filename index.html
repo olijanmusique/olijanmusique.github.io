@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Oli Jan</title>
   <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
   <meta name="description" content="Music, Audio Design, Voice Acting" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -23,7 +24,8 @@
       --body:  'Lato', 'Helvetica Neue', Arial, sans-serif;
     }
 
-    html, body { min-height: 100vh; }
+    html { background: #b5b3af; }
+    body { background: transparent; }
 
     body {
       background: #b5b3af;
@@ -35,7 +37,7 @@
     }
 
     /* ── SITE WRAPPER ── */
-    .site { max-width: 880px; margin: 0 auto; padding: 0 60px; background: var(--bg); min-height: 100vh; }
+    .site { max-width: 880px; margin: 0 auto; padding: 0 60px 60px; background: var(--bg); }
 
     /* ── HEADER ── */
     header { text-align: center; padding: 40px 0 0; }
@@ -52,7 +54,12 @@
       margin-bottom: 20px;
     }
 
-    .header-rule { display: none; }
+    .header-rule {
+      border: none;
+      border-top: 1px solid var(--rule);
+      max-width: 680px;
+      margin: 0 auto;
+    }
 
     nav {
       padding: 12px 0;
