@@ -52,11 +52,31 @@
       margin-bottom: 20px;
     }
 
-    .header-rule { border: none; border-top: 1px solid var(--rule); }
+    .header-rule { display: none; }
 
-    nav { padding: 12px 0; text-align: center; }
+    nav {
+      padding: 12px 0;
+      text-align: center;
+      position: relative;
+    }
 
-    .nav-links { list-style: none; display: inline-flex; gap: 36px; }
+    nav::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0; right: 0;
+      height: 1px;
+      background: var(--rule);
+    }
+
+    .nav-links {
+      list-style: none;
+      display: inline-flex;
+      gap: 36px;
+      position: relative;
+      background: var(--bg);
+      padding: 0 24px;
+    }
 
     .nav-links a {
       font-family: var(--sans);
