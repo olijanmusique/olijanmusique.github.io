@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Oli Jan</title>
-  <link rel="icon" type="image/png" href="cover.png" />
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
   <meta name="description" content="Music, Audio Design, Voice Acting" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -64,7 +64,7 @@
       font-weight: 600;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: var(--mid);
+      color: var(--muted);
       text-decoration: none;
       cursor: pointer;
       transition: color 0.15s;
@@ -74,7 +74,9 @@
     .nav-links a:hover { color: var(--dark); }
     .nav-links a.active {
       color: var(--dark);
-      border-bottom: 2px solid var(--dark);
+      font-weight: 700;
+      text-decoration: underline;
+      text-underline-offset: 4px;
     }
 
     /* ── PAGES ── */
@@ -95,15 +97,15 @@
 
     .hero-text {
       position: absolute;
-      bottom: 40px;
+      bottom: 35%;
       left: 0; right: 0;
       text-align: center;
       font-family: var(--sans);
       font-size: 11px;
-      font-weight: 600;
+      font-weight: 700;
       letter-spacing: 0.26em;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.82);
+      color: rgba(255,255,255,0.9);
       pointer-events: none;
     }
 
@@ -118,10 +120,10 @@
     .hero-overlay {
       font-family: var(--sans);
       font-size: 10px;
-      font-weight: 600;
+      font-weight: 700;
       letter-spacing: 0.26em;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.82);
+      color: rgba(255,255,255,0.9);
     }
 
     /* ── INFO ── */
@@ -415,7 +417,6 @@
 
   <header>
     <a class="site-title" onclick="showPage('home')">Oli Jan</a>
-    <hr class="header-rule" />
     <nav>
       <ul class="nav-links">
         <li><a onclick="showPage('info')" id="nav-info">Info</a></li>
