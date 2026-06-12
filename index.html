@@ -891,9 +891,16 @@
 
   window.addEventListener('popstate', e => showPage(e.state?.page || 'home'));
 
-  const path = window.location.pathname.replace(/^\//, '').split('/')[0];
   const valid = ['info', 'listen', 'watch', 'contact'];
-  showPage(valid.includes(path) ? path : 'home');
+  const params = new URLSearchParams(window.location.search);
+  const fromRedirect = params.get('p');
+  if (fromRedirect && valid.includes(fromRedirect)) {
+    history.replaceState({ page: fromRedirect }, '', '/' + fromRedirect);
+    showPage(fromRedirect);
+  } else {
+    const path = window.location.pathname.replace(/^\//, '').split('/')[0];
+    showPage(valid.includes(path) ? path : 'home');
+  }
 </script>
 </body>
 </html>
