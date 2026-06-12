@@ -886,14 +886,10 @@
     document.title = pageTitles[id] || 'Oli Jan';
 
     window.scrollTo(0, 0);
-    window.location.hash = id === 'home' ? '' : id;
+    history.pushState({ page: id }, '', id === 'home' ? '/' : '/' + id);
   }
 
-  window.addEventListener('hashchange', () => {
-    const id = window.location.hash.replace('#', '') || 'home';
-    const valid = ['info', 'listen', 'watch', 'contact'];
-    showPage(valid.includes(id) ? id : 'home');
-  });
+  window.addEventListener('popstate', e => showPage(e.state?.page || 'home'));
 
   const path = window.location.pathname.replace(/^\//, '').split('/')[0];
   const valid = ['info', 'listen', 'watch', 'contact'];

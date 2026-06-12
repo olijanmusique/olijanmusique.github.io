@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Oli Jan</title>
+  <script>
+    // GitHub Pages 404 redirect trick for single-page apps
+    // When GitHub can't find /listen, it serves this page.
+    // We extract the path and redirect to /?p=listen
+    // index.html reads ?p= and shows the right page.
+    var page = window.location.pathname.replace(/^\//, '').split('/')[0];
+    var valid = ['info', 'listen', 'watch', 'contact'];
+    var redirect = valid.includes(page) ? page : '';
+    window.location.replace(
+      window.location.origin + (redirect ? '/?p=' + redirect : '/')
+    );
+  </script>
+</head>
+<body></body>
+</html>
