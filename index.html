@@ -451,12 +451,66 @@
       color: var(--muted);
     }
 
+    /* ── MOBILE MENU BUTTON ── */
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      font-family: var(--sans);
+      font-size: 11.5px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      cursor: pointer;
+      padding: 0;
+      position: relative;
+      background: var(--bg);
+      padding: 0 24px;
+      z-index: 1;
+    }
+
+    .mobile-menu-btn:hover { color: var(--dark); }
+
+    /* Mobile nav links stacked when open */
+    nav.mobile-open .nav-links {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      padding: 16px 0 8px;
+      background: var(--bg);
+      position: relative;
+      z-index: 1;
+    }
+
     /* ── RESPONSIVE ── */
-    @media (max-width: 500px) {
-      .listen-grid { grid-template-columns: 1fr; }
+    @media (max-width: 600px) {
+      /* Nav: hide links, show MENU button */
+      .nav-links { display: none; }
+      .mobile-menu-btn { display: inline-block; }
+      nav.mobile-open .nav-links { display: flex; }
+
+      /* Site padding */
+      .site { padding: 0 20px 0; margin: 0; }
+
+      /* Title smaller */
+      .site-title { font-size: 28px; margin-bottom: 14px; }
+
+      /* Hero subtitle smaller */
+      .hero-text { font-size: 9px; letter-spacing: 0.18em; bottom: 28%; }
+
+      /* Listen: keep 2 columns, tighter gap */
+      .listen-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+
+      /* Contact: stack */
       .contact-layout { grid-template-columns: 1fr; gap: 28px; }
       .form-row { grid-template-columns: 1fr; }
-      .nav-links { gap: 18px; }
+
+      /* Info content full width on mobile */
+      #info > * { max-width: 100%; }
+      #info .divider { max-width: 100%; }
+      .bio { max-width: 100%; }
     }
   </style>
 </head>
@@ -466,6 +520,7 @@
   <header>
     <a class="site-title" onclick="showPage('home')">Oli Jan</a>
     <nav>
+      <button class="mobile-menu-btn" onclick="toggleMobileMenu()">Menu</button>
       <ul class="nav-links">
         <li><a onclick="showPage('info')" id="nav-info">Info</a></li>
         <li><a onclick="showPage('listen')" id="nav-listen">Listen</a></li>
@@ -876,7 +931,12 @@
 
   const pageTitles = { home: 'Oli Jan', info: 'info — Oli Jan', listen: 'listen — Oli Jan', watch: 'watch — Oli Jan', contact: 'contact — Oli Jan' };
 
+  function toggleMobileMenu() {
+    document.querySelector('nav').classList.toggle('mobile-open');
+  }
+
   function showPage(id) {
+    document.querySelector('nav').classList.remove('mobile-open');
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
     const page = document.getElementById(id);
