@@ -907,6 +907,14 @@
 <script>
   function playListen(tile, videoId, hash) {
     if (tile.classList.contains('playing')) return;
+    // Reset all other tiles back to thumbnail
+    document.querySelectorAll('.listen-tile.playing').forEach(t => {
+      t.classList.remove('playing');
+      t.querySelector('iframe').src = '';
+      t.style.paddingBottom = '100%';
+      t.style.background = 'var(--bg)';
+    });
+    // Play the clicked tile
     const iframe = tile.querySelector('iframe');
     iframe.src = 'https://player.vimeo.com/video/' + videoId + '?h=' + hash + '&autoplay=1';
     tile.style.paddingBottom = '56.25%';
