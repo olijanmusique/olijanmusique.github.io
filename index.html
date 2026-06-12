@@ -245,6 +245,8 @@
       grid-template-columns: 1fr 1fr;
       gap: 16px;
       align-items: center;
+      max-width: 75%;
+      margin: 0 auto;
     }
 
     .listen-item { display: flex; flex-direction: column; }
@@ -303,6 +305,36 @@
     /* ── WATCH ── */
     #watch { padding-top: 36px; }
 
+    .watch-preview {
+      position: absolute;
+      inset: 0;
+      cursor: pointer;
+      background: #000;
+    }
+
+    .watch-preview img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .watch-preview .play-btn {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+    }
+
+    .watch-preview .play-btn svg {
+      filter: drop-shadow(0 1px 4px rgba(0,0,0,0.6));
+    }
+
+    #watch-iframe { display: none !important; position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
+    #watch-iframe.playing { display: block !important; }
+    #watch-preview { z-index: 2; }
+
     .watch-main {
       position: relative;
       padding-bottom: 56.25%;
@@ -343,17 +375,17 @@
       transition: none;
     }
 
-    .watch-thumb { position: relative; cursor: pointer; aspect-ratio: 16/9; transition: transform 0.15s; }
-    .watch-thumb-img { position: absolute; inset: 0; overflow: hidden; background: #888; }
+    .watch-thumb { position: relative; flex: 1; overflow: hidden; cursor: pointer; aspect-ratio: 16/9; transition: transform 0.15s; background: #888; }
+
     .watch-thumb.active { transform: scale(1.04); z-index: 1; }
     .watch-thumb:hover:not(.active) { transform: scale(1.02); }
 
     .watch-thumb-wrap { flex: 1; display: flex; flex-direction: column; padding: 0 4px; position: relative; }
 
 
-    .watch-thumb-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .watch-thumb img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
 
-    .watch-thumb-fallback { width: 100%; height: 100%; background: #666; display: flex; align-items: center; justify-content: center; }
+    .watch-thumb-fallback { position: absolute; inset: 0; background: #666; display: flex; align-items: center; justify-content: center; }
 
     .watch-thumb-fallback svg {
       width: 22px; height: 22px;
@@ -824,8 +856,17 @@
 
     <!-- Main player -->
     <div class="watch-main" id="watch-player">
+      <div class="watch-preview" id="watch-preview" onclick="playMainWatch()">
+        <img id="watch-preview-img" src="https://vumbnail.com/176644720.jpg" alt="Winds of Jupiter"
+          onerror="this.src=''" />
+        <div class="play-btn">
+          <svg viewBox="0 0 80 80" fill="none" width="64" height="64">
+            <circle cx="40" cy="40" r="40" fill="rgba(255,255,255,0.2)"/>
+            <polygon points="32,24 32,56 58,40" fill="white"/>
+          </svg>
+        </div>
+      </div>
       <iframe id="watch-iframe"
-        src="https://player.vimeo.com/video/176644720?h=96758c9eef"
         frameborder="0" referrerpolicy="strict-origin-when-cross-origin" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" allowfullscreen></iframe>
     </div>
 
@@ -840,41 +881,41 @@
 
       <div class="watch-thumb-wrap">
         <div class="watch-thumb active" onclick="switchWatch(0)">
-          <div class="watch-thumb-img"><img src="https://vumbnail.com/176644720.jpg" alt="Winds of Jupiter"
+          <img src="https://vumbnail.com/176644720.jpg" alt="Winds of Jupiter"
             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
           <div class="watch-thumb-fallback" style="display:none;">
             <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-          </div></div>
+          </div>
         </div>
       </div>
 
       <div class="watch-thumb-wrap">
         <div class="watch-thumb" onclick="switchWatch(1)">
-          <div class="watch-thumb-img"><img src="https://vumbnail.com/136543397.jpg" alt="Breathing"
+          <img src="https://vumbnail.com/136543397.jpg" alt="Breathing"
             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
           <div class="watch-thumb-fallback" style="display:none;">
             <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-          </div></div>
+          </div>
         </div>
       </div>
 
       <div class="watch-thumb-wrap">
         <div class="watch-thumb" onclick="switchWatch(2)">
-          <div class="watch-thumb-img"><img src="https://vumbnail.com/136543900.jpg" alt="Voyager: Introitus"
+          <img src="https://vumbnail.com/136543900.jpg" alt="Voyager: Introitus"
             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
           <div class="watch-thumb-fallback" style="display:none;">
             <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-          </div></div>
+          </div>
         </div>
       </div>
 
       <div class="watch-thumb-wrap">
         <div class="watch-thumb" onclick="switchWatch(3)">
-          <div class="watch-thumb-img"><img src="https://vumbnail.com/136543615.jpg" alt="You"
+          <img src="https://vumbnail.com/136543615.jpg" alt="You"
             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
           <div class="watch-thumb-fallback" style="display:none;">
             <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-          </div></div>
+          </div>
         </div>
       </div>
 
@@ -973,12 +1014,35 @@
     { title: 'You', desc: 'Film (excerpt) by Balázs Szörényi-Lux · Sound by Jack Walker · Music by Oli Jan' },
   ];
 
+  const watchThumbs = [
+    'https://vumbnail.com/176644720.jpg',
+    'https://vumbnail.com/136543397.jpg',
+    'https://vumbnail.com/136543900.jpg',
+    'https://vumbnail.com/136543615.jpg',
+  ];
+
+  let currentWatchIdx = 0;
+
+  function playMainWatch() {
+    const preview = document.getElementById('watch-preview');
+    const iframe = document.getElementById('watch-iframe');
+    preview.style.display = 'none';
+    iframe.src = watchVideos[currentWatchIdx] + '&autoplay=1';
+    iframe.classList.add('playing');
+  }
+
   function switchWatch(idx) {
-    document.getElementById('watch-iframe').src = watchVideos[idx];
+    currentWatchIdx = idx;
+    const iframe = document.getElementById('watch-iframe');
+    iframe.classList.remove('playing');
+    iframe.src = '';
+    const preview = document.getElementById('watch-preview');
+    preview.style.display = 'block';
+    document.getElementById('watch-preview-img').src = watchThumbs[idx];
     document.querySelectorAll('.watch-thumb').forEach((t, i) => {
       t.classList.toggle('active', i === idx);
     });
-document.getElementById('watch-caption-title').textContent = watchCaptions[idx].title;
+    document.getElementById('watch-caption-title').textContent = watchCaptions[idx].title;
     document.getElementById('watch-caption-desc').textContent = watchCaptions[idx].desc;
   }
 
