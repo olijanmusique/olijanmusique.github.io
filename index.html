@@ -100,11 +100,18 @@
     }
 
     /* ── PAGES ── */
-    .page { display: none; padding-bottom: 80px; }
+    .page { display: none; padding-bottom: 0; }
     .page.active { display: block; }
 
+    .page.active::after {
+      content: '';
+      display: block;
+      border-top: 1px solid var(--rule);
+      margin-top: 36px;
+    }
+
     /* ── HOME ── */
-    #home { padding-top: 40px; }
+    #home { padding-top: 36px; }
 
     .hero {
       width: 100%;
@@ -196,7 +203,7 @@
     .award-cat {
       font-size: 15px;
       font-weight: 700;
-      margin-bottom: 12px;
+      margin-bottom: 4px;
       margin-top: 28px;
     }
 
@@ -263,6 +270,19 @@
     }
 
     .listen-tile:hover img { opacity: 0.85; }
+
+    .listen-tile.playing img,
+    .listen-tile.playing .play-btn { display: none; }
+
+    .listen-tile iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      border: none;
+      display: none;
+    }
+
+    .listen-tile.playing iframe { display: block; }
 
     .listen-tile .play-btn {
       position: absolute;
@@ -344,9 +364,11 @@
 
     .contact-layout {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 48px;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 32px;
       align-items: start;
+      max-width: 600px;
+      margin: 0 auto;
     }
 
     .contact-left {}
@@ -661,50 +683,58 @@
     <div class="listen-grid">
 
       <div class="listen-item">
-        <a href="https://vimeo.com/343126131?h=d304fc0727" target="_blank" class="listen-tile">
+        <div class="listen-tile" onclick="playListen(this, '343126131', 'd304fc0727')">
           <img src="postludium.jpg" alt="Postludium in g" />
           <div class="play-btn">
             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="36" height="36">
               <polygon points="6,3 6,21 21,12" fill="white" filter="drop-shadow(0 1px 3px rgba(0,0,0,0.5))"/>
             </svg>
           </div>
-        </a>
+          <iframe title="vimeo-player" frameborder="0" referrerpolicy="strict-origin-when-cross-origin"
+            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" allowfullscreen></iframe>
+        </div>
         <div class="listen-label">Postludium in g</div>
       </div>
 
       <div class="listen-item">
-        <a href="https://vimeo.com/351514386?h=842ac34964" target="_blank" class="listen-tile">
+        <div class="listen-tile" onclick="playListen(this, '351514386', '842ac34964')">
           <img src="requiem.jpg" alt="Requiem in d" />
           <div class="play-btn">
             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="36" height="36">
               <polygon points="6,3 6,21 21,12" fill="white" filter="drop-shadow(0 1px 3px rgba(0,0,0,0.5))"/>
             </svg>
           </div>
-        </a>
+          <iframe title="vimeo-player" frameborder="0" referrerpolicy="strict-origin-when-cross-origin"
+            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" allowfullscreen></iframe>
+        </div>
         <div class="listen-label">Requiem in d</div>
       </div>
 
       <div class="listen-item">
-        <a href="https://vimeo.com/351515074?h=fd47eec9b6" target="_blank" class="listen-tile">
+        <div class="listen-tile" onclick="playListen(this, '351515074', 'fd47eec9b6')">
           <img src="prelude.jpg" alt="Prelude in a" />
           <div class="play-btn">
             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="36" height="36">
               <polygon points="6,3 6,21 21,12" fill="white" filter="drop-shadow(0 1px 3px rgba(0,0,0,0.5))"/>
             </svg>
           </div>
-        </a>
+          <iframe title="vimeo-player" frameborder="0" referrerpolicy="strict-origin-when-cross-origin"
+            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" allowfullscreen></iframe>
+        </div>
         <div class="listen-label">Prelude in a</div>
       </div>
 
       <div class="listen-item">
-        <a href="https://vimeo.com/136544419?h=0925adaa22" target="_blank" class="listen-tile">
+        <div class="listen-tile" onclick="playListen(this, '136544419', '0925adaa22')">
           <img src="tarantella.jpg" alt="Tarantella in eb" />
           <div class="play-btn">
             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" width="36" height="36">
               <polygon points="6,3 6,21 21,12" fill="white" filter="drop-shadow(0 1px 3px rgba(0,0,0,0.5))"/>
             </svg>
           </div>
-        </a>
+          <iframe title="vimeo-player" frameborder="0" referrerpolicy="strict-origin-when-cross-origin"
+            allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" allowfullscreen></iframe>
+        </div>
         <div class="listen-label">Tarantella in eb</div>
       </div>
 
@@ -764,10 +794,6 @@
 
   <!-- CONTACT -->
   <section id="contact" class="page">
-
-    <!-- Banner area (matches original grey spacer) -->
-    <div style="height: 24px;"></div>
-    <hr class="divider" />
 
     <div class="contact-layout">
 
@@ -831,6 +857,7 @@
     tile.style.paddingBottom = '56.25%';
     tile.style.background = '#000';
     tile.classList.add('playing');
+    document.title = '▶ listen — Oli Jan';
   }
 
   const watchVideos = [
@@ -847,6 +874,8 @@
     });
   }
 
+  const pageTitles = { home: 'Oli Jan', info: 'info — Oli Jan', listen: 'listen — Oli Jan', watch: 'watch — Oli Jan', contact: 'contact — Oli Jan' };
+
   function showPage(id) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
@@ -854,6 +883,7 @@
     if (page) page.classList.add('active');
     const navEl = document.getElementById('nav-' + id);
     if (navEl) navEl.classList.add('active');
+    document.title = pageTitles[id] || 'Oli Jan';
 
     window.scrollTo(0, 0);
     history.pushState({ page: id }, '', id === 'home' ? '/' : '/' + id);
